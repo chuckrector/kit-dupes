@@ -1,4 +1,10 @@
-# SvelteKit duplication of nested anchors
+# Update 5/1/2021
+
+This has been resolved in 3.38.1. See https://github.com/sveltejs/svelte/issues/6274#issuecomment-830648273
+
+I'm preserving the steps described below for archaeological purposes.
+
+## SvelteKit duplication of nested anchors
 
 In both development and preview modes, the content of nested anchors will be duplicated on load. `index.svelte` contains:
 
