@@ -1,6 +1,6 @@
 # SvelteKit duplication of nested anchors
 
-In development, the content of nested anchors will be duplicated on reload. `index.svelte` contains:
+In both development and preview modes, the content of nested anchors will be duplicated on load. `index.svelte` contains:
 
 ```html
 SvelteKit <a href="/"><a href="/">test</a></a>
@@ -39,4 +39,4 @@ you may then see "testSvelteKit test". Inspecting the document reveals:
 </div>
 ```
 
-It does not always happen immediately and sometimes only occurs after repeated edits, such as undoing/redoing the newline.
+In development mode, it does not always happen immediately and sometimes only occurs after repeated edits such as undoing/redoing the newline.
