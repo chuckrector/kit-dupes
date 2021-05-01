@@ -1,38 +1,42 @@
-# create-svelte
+# SvelteKit duplication of nested anchors
 
-Everything you need to build a Svelte project, powered by [`create-svelte`](https://github.com/sveltejs/kit/tree/master/packages/create-svelte);
+In development, the content of nested anchors will be duplicated on reload. `index.svelte` contains:
 
-## Creating a project
-
-If you're seeing this, you've probably already done this step. Congrats!
-
-```bash
-# create a new project in the current directory
-npm init svelte@next
-
-# create a new project in my-app
-npm init svelte@next my-app
+```html
+SvelteKit <a href="/"><a href="/">test</a></a>
 ```
 
-> Note: the `@next` is temporary
+After `npm run dev`, you will initially see "SvelteKit test" and a moment later "SvelteKit testtest". Inspecting the document in Chrome reveals:
 
-## Developing
-
-Once you've created a project and installed dependencies with `npm install` (or `pnpm install` or `yarn`), start a development server:
-
-```bash
-npm run dev
-
-# or start the server and open the app in a new browser tab
-npm run dev -- --open
+```html
+<div id="svelte">
+    "SvelteKit "
+    <a href="/">
+        <a href="/">test</a>
+    </a>
+    <a href="/">test</a>
+    <-- ... --->
+</div>
 ```
 
-## Building
+If you fiddle with the contents and add a newline like so
 
-Before creating a production version of your app, install an [adapter](https://kit.svelte.dev/docs#adapters) for your target environment. Then:
-
-```bash
-npm run build
+```html
+SvelteKit
+<a href="/"><a href="/">test</a></a>
 ```
 
-> You can preview the built app with `npm run preview`, regardless of whether you installed an adapter. This should _not_ be used to serve your app in production.
+you may then see "testSvelteKit test". Inspecting the document reveals:
+
+```html
+<div id="svelte">
+    <a href="/">test</a>
+    "SvelteKit "
+    <a href="/">
+        <a href="/">test</a>
+    </a>
+    <-- ... --->
+</div>
+```
+
+It does not always happen immediately and sometimes only occurs after repeated edits, such as undoing/redoing the newline.
